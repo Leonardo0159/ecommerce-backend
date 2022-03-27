@@ -33,4 +33,12 @@ Route::prefix('admin')->group(function() {
         Route::post('save/{id}', 'ColorController@save');
         Route::delete('delete', 'ColorController@delete');
     });
+
+    Route::prefix('size')->group(function() {
+        Route::get('list', 'SizeController@listAll');
+        Route::get('list/{id}', 'SizeController@getWithId');
+        Route::post('save', 'SizeController@save');
+        Route::post('save/{id}', 'SizeController@save');
+        Route::delete('delete', 'SizeController@delete');
+    });
 });

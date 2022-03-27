@@ -3,37 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Color;
+use App\Size;
 
-class ColorController extends Controller
+class SizeController extends Controller
 {
     public function listAll() {
-        $colors = Color::get();
+        $sizes = Size::get();
 
-        return response()->json(compact('colors'));
+        return response()->json(compact('sizes'));
     }
 
-    public function getWithId(int $ColorId) {
+    public function getWithId(int $SizeId) {
 
-        $Color = null;
+        $Size = null;
 
-        $Color = Color::where('id', $ColorId)->first();
+        $Size = Size::where('id', $SizeId)->first();
 
-        return response()->json(compact('Color'));
+        return response()->json(compact('Size'));
     }
 
-    public function save(Request $request, int $ColorId = null) {
+    public function save(Request $request, int $SizeId = null) {
         $this->validate($request, [
             "name" => "required|string|max:100|min:1"
         ]);
 
         $name = $request->post("name");
-        if ($ColorId) {
-            $Color = Color::where('id', $ColorId)->update([
+        if ($SizeId) {
+            $Size = Size::where('id', $SizeId)->update([
                 "name" => $name
             ]);
         } else {
-            $Color = Color::create([
+            $Size = Size::create([
                 "name" => $name
             ]);
         }
@@ -45,8 +45,8 @@ class ColorController extends Controller
             'id' => 'required|int|min:1'
         ]);
 
-        $ColorId = $request->post('id');
-        Color::where('id', $ColorId)->delete();
+        $SizeId = $request->post('id');
+        Size::where('id', $SizeId)->delete();
 
         //return response()->json("OK");
     }
