@@ -25,4 +25,12 @@ Route::prefix('admin')->group(function() {
         Route::post('save/{id}', 'CategoryController@save');
         Route::delete('delete', 'CategoryController@delete');
     });
+
+    Route::prefix('color')->group(function() {
+        Route::get('list', 'ColorController@listAll');
+        Route::get('list/{id}', 'ColorController@getWithId');
+        Route::post('save', 'ColorController@save');
+        Route::post('save/{id}', 'ColorController@save');
+        Route::delete('delete', 'ColorController@delete');
+    });
 });
