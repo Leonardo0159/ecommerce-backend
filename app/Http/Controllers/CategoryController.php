@@ -39,7 +39,15 @@ class CategoryController extends Controller
         }
     }
 
-    public function delete() {
+    public function delete(Request $request): JsonResponse 
+    {
+        $this->validate($request, [
+            'id' => 'required|int|min:1'
+        ]);
 
+        $categoryId = $request->post('id');
+        Category::where('id', $categoryId)->delete();
+
+        //return response()->json("OK");
     }
 }
