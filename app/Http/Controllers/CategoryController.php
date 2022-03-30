@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
@@ -32,22 +33,31 @@ class CategoryController extends Controller
             $category = Category::where('id', $categoryId)->update([
                 "name" => $name
             ]);
+            return response()->json(["message"=>"Atualizou com sucesso"],Response::HTTP_OK);
         } else {
             $category = Category::create([
                 "name" => $name
             ]);
+            return response()->json(["message"=>"Criou com sucesso"],Response::HTTP_OK);
         }
+        return response()->json(["message"=>"Deu ruim"],Response::HTTP_NOT_ACCEPTABLE);
     }
 
-    public function delete(Request $request): JsonResponse 
+    public function delete(Request $request)
     {
         $this->validate($request, [
             'id' => 'required|int|min:1'
         ]);
 
         $categoryId = $request->post('id');
-        Category::where('id', $categoryId)->delete();
+        $category = Category::where('id', $categoryId)->first();
 
-        //return response()->json("OK");
+        if($category){
+            $category->delete(); 
+            
+            return response()->json(["message"=>"Deletou com sucesso"],Response::HTTP_OK);
+        }
+        
+        return response()->json(["message"=>"Deu ruim"],Response::HTTP_NOT_ACCEPTABLE);
     }
 }

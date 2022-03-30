@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Size;
+use Illuminate\Http\Response;
 
 class SizeController extends Controller
 {
@@ -32,22 +33,31 @@ class SizeController extends Controller
             $Size = Size::where('id', $SizeId)->update([
                 "name" => $name
             ]);
+            return response()->json(["message"=>"Atualizou com sucesso"],Response::HTTP_OK);
         } else {
             $Size = Size::create([
                 "name" => $name
             ]);
+            return response()->json(["message"=>"Criou com sucesso"],Response::HTTP_OK);
         }
+        return response()->json(["message"=>"Deu ruim"],Response::HTTP_NOT_ACCEPTABLE);
     }
 
-    public function delete(Request $request): JsonResponse 
+    public function delete(Request $request)
     {
         $this->validate($request, [
             'id' => 'required|int|min:1'
         ]);
 
-        $SizeId = $request->post('id');
-        Size::where('id', $SizeId)->delete();
+        $sizeId = $request->post('id');
+        $size = Size::where('id', $sizeId)->first();
 
-        //return response()->json("OK");
+        if($size){
+            $size->delete(); 
+            
+            return response()->json(["message"=>"Deletou com sucesso"],Response::HTTP_OK);
+        }
+        
+        return response()->json(["message"=>"Deu ruim"],Response::HTTP_NOT_ACCEPTABLE);
     }
 }

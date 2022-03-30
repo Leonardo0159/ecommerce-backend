@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSizeTable extends Migration
 {
-    /**
+    /**Lii
      * Run the migrations.
      *
      * @return void
