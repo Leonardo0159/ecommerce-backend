@@ -3,57 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cart;
+use App\Order;
 use Illuminate\Http\Response;
 
-class CartController extends Controller
+class OrderController extends Controller
 {
     public function listAll()
     {
-        $carts = Cart::get();
+        $orders = Order::get();
 
-        return response()->json(compact('carts'));
+        return response()->json(compact('orders'));
     }
 
-    public function getWithId(int $CartId)
+    public function getWithId(int $OrderId)
     {
+        $Order = null;
 
-        $Cart = null;
+        $Order = Order::where('id', $OrderId)->first();
 
-        $Cart = Cart::where('id', $CartId)->first();
-
-        return response()->json(compact('Cart'));
+        return response()->json(compact('Order'));
     }
 
-    public function save(Request $request, int $CartId = null)
+    public function save(Request $request, int $OrderId = null)
     {
-        if ($CartId) {
-            $Cart = Cart::where('id', $CartId)->update($request->only([
-                'user_id',
-                'total_value_cart'
+        if ($OrderId) {
+            $Order = Order::where('id', $OrderId)->update($request->only([
+                'cart_id',
+                'promotion_id',
+                'total_value'
             ]));
             return response()->json(["message" => "Atualizou com sucesso"], Response::HTTP_OK);
         } else {
-            $Cart = Cart::create($request->only([
-                'user_id',
-                'total_value_cart'
+            $Order = Order::create($request->only([
+                'cart_id',
+                'promotion_id',
+                'total_value'
             ]));
             return response()->json(["message" => "Criou com sucesso"], Response::HTTP_OK);
         }
         return response()->json(["message" => "Deu ruim"], Response::HTTP_NOT_ACCEPTABLE);
     }
-    
+
     public function delete(Request $request)
     {
         $this->validate($request, [
             'id' => 'required|int|min:1'
         ]);
 
-        $cartId = $request->post('id');
-        $cart = Cart::where('id', $cartId)->first();
+        $orderId = $request->post('id');
+        $order = Order::where('id', $orderId)->first();
 
-        if ($cart) {
-            $cart->delete();
+        if ($order) {
+            $order->delete();
 
             return response()->json(["message" => "Deletou com sucesso"], Response::HTTP_OK);
         }
