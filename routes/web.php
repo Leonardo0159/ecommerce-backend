@@ -57,4 +57,19 @@ Route::prefix('admin')->group(function() {
         Route::post('save/{id}', 'InventoryController@save');
         Route::delete('delete', 'InventoryController@delete');
     });
+
+    Route::prefix('cart')->group(function() {
+        Route::get('list', 'CartController@listAll');
+        Route::get('list/{id}', 'CartController@getWithId');
+        Route::post('save', 'CartController@save');
+        Route::post('save/{id}', 'CartController@save');
+        Route::delete('delete', 'CartController@delete');
+    });
+    Route::prefix('inventorycart')->group(function() {
+        Route::get('list', 'InventoryCartController@listAll');
+        Route::get('list/{id}', 'InventoryCartController@getWithId');
+        Route::post('save', 'InventoryCartController@save');
+        Route::post('save/{id}', 'InventoryCartController@save');
+        Route::delete('delete', 'InventoryCartController@delete');
+    });
 });
