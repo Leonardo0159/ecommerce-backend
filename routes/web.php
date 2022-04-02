@@ -49,4 +49,12 @@ Route::prefix('admin')->group(function() {
         Route::post('save/{id}', 'ProductController@save');
         Route::delete('delete', 'ProductController@delete');
     });
+
+    Route::prefix('inventory')->group(function() {
+        Route::get('list', 'InventoryController@listAll');
+        Route::get('list/{id}', 'InventoryController@getWithId');
+        Route::post('save', 'InventoryController@save');
+        Route::post('save/{id}', 'InventoryController@save');
+        Route::delete('delete', 'InventoryController@delete');
+    });
 });
