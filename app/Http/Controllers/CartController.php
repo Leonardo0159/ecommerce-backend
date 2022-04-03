@@ -30,19 +30,21 @@ class CartController extends Controller
         if ($CartId) {
             $Cart = Cart::where('id', $CartId)->update($request->only([
                 'user_id',
-                'total_value_cart'
+                'total_value_cart',
+                'status'
             ]));
             return response()->json(["message" => "Atualizou com sucesso"], Response::HTTP_OK);
         } else {
             $Cart = Cart::create($request->only([
                 'user_id',
-                'total_value_cart'
+                'total_value_cart',
+                'status'
             ]));
             return response()->json(["message" => "Criou com sucesso"], Response::HTTP_OK);
         }
         return response()->json(["message" => "Deu ruim"], Response::HTTP_NOT_ACCEPTABLE);
     }
-    
+
     public function delete(Request $request)
     {
         $this->validate($request, [
