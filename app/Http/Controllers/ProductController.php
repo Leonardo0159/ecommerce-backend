@@ -11,7 +11,7 @@ class ProductController extends Controller
     public function listAll() {
         $products = Product::get();
 
-        return response()->json('products');
+        return response()->json($products, Response::HTTP_OK);
     }
 
     public function getWithId(int $ProductId) {
