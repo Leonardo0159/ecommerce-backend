@@ -11,7 +11,7 @@ class ProductController extends Controller
     public function listAll() {
         $products = Product::get();
 
-        return response()->json(compact('products'));
+        return response()->json('products');
     }
 
     public function getWithId(int $ProductId) {
@@ -20,7 +20,7 @@ class ProductController extends Controller
 
         $Product = Product::where('id', $ProductId)->first();
 
-        return response()->json(compact('Product'));
+        return response()->json($Product, Response::HTTP_OK);
     }
 
     public function save(Request $request, int $ProductId = null) {
